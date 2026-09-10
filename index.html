@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ink by Empress | Tattoo Appointments</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#0b0b0b;
+  color:#f5f5f5;
+  line-height:1.6;
+}
+
+a{color:inherit;text-decoration:none}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#0b0b0bf2;
+  border-bottom:1px solid #292929;
+  backdrop-filter:blur(12px);
+}
+
+.nav{
+  max-width:1100px;
+  margin:auto;
+  padding:18px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:3px;
+}
+
+.navlinks{
+  display:flex;
+  gap:22px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.hero{
+  min-height:76vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:70px 20px;
+  background:
+    radial-gradient(circle at center,#242424 0,#101010 38%,#080808 75%);
+}
+
+.hero-inner{max-width:800px}
+
+.badge{
+  display:inline-block;
+  border:1px solid #555;
+  padding:8px 14px;
+  border-radius:30px;
+  font-size:12px;
+  letter-spacing:2px;
+  margin-bottom:24px;
+}
+
+.hero h1{
+  font-size:clamp(48px,10vw,100px);
+  line-height:.95;
+  letter-spacing:-4px;
+  text-transform:uppercase;
+}
+
+.hero p{
+  max-width:620px;
+  margin:25px auto;
+  color:#bdbdbd;
+  font-size:17px;
+}
+
+.btn{
+  display:inline-block;
+  background:#fff;
+  color:#000;
+  padding:15px 24px;
+  border-radius:4px;
+  font-weight:900;
+  font-size:13px;
+  letter-spacing:1px;
+  border:0;
+  cursor:pointer;
+}
+
+.btn.dark{
+  background:#191919;
+  color:#fff;
+  border:1px solid #444;
+}
+
+section{
+  max-width:1100px;
+  margin:auto;
+  padding:75px 22px;
+}
+
+.section-title{
+  font-size:38px;
+  margin-bottom:12px;
+  text-transform:uppercase;
+  letter-spacing:-1px;
+}
+
+.section-sub{
+  color:#999;
+  margin-bottom:35px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:28px;
+}
+
+.card{
+  background:#111;
+  border:1px solid #292929;
+  border-radius:12px;
+  padding:28px;
+}
+
+.calendar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:7px;
+  margin:20px 0;
+}
+
+.day-name{
+  text-align:center;
+  color:#777;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.day{
+  min-height:44px;
+  border:1px solid #2b2b2b;
+  background:#151515;
+  color:#ddd;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.day:hover:not(:disabled){
+  background:#292929;
+}
+
+.day.selected{
+  background:#fff;
+  color:#000;
+}
+
+.day:disabled{
+  color:#444;
+  cursor:not-allowed;
+  background:#0d0d0d;
+}
+
+.month-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.month-row button{
+  background:#191919;
+  color:#fff;
+  border:1px solid #444;
+  width:40px;
+  height:40px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.times{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:15px;
+}
+
+.time{
+  padding:12px 5px;
+  border:1px solid #333;
+  background:#151515;
+  color:#fff;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.time.selected{
+  background:#fff;
+  color:#000;
+}
+
+.form{
+  display:none;
+  margin-top:25px;
+}
+
+.form.show{display:block}
+
+label{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin:14px 0 6px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+input,textarea{
+  width:100%;
+  padding:13px;
+  border-radius:5px;
+  border:1px solid #333;
+  background:#0b0b0b;
+  color:#fff;
+  font-size:15px;
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+.check{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin:15px 0;
+  font-size:13px;
+  color:#bbb;
+}
+
+.check input{width:auto;margin-top:4px}
+
+.notice{
+  padding:16px;
+  background:#181818;
+  border-left:3px solid #fff;
+  margin:15px 0;
+  color:#ccc;
+  font-size:14px;
+}
+
+.rules{
+  list-style:none;
+}
+
+.rules li{
+  padding:14px 0;
+  border-bottom:1px solid #292929;
+  color:#c6c6c6;
+}
+
+.rules strong{color:#fff}
+
+.about{
+  text-align:center;
+  max-width:760px;
+}
+
+.socials{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:25px;
+}
+
+.social{
+  border:1px solid #383838;
+  padding:12px 16px;
+  border-radius:5px;
+  font-size:13px;
+}
+
+#success{
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  border:1px solid #444;
+  background:#151515;
+}
+
+footer{
+  border-top:1px solid #292929;
+  padding:30px 20px;
+  text-align:center;
+  color:#777;
+  font-size:12px;
+}
+
+@media(max-width:800px){
+  .grid{grid-template-columns:1fr}
+  .navlinks{gap:10px}
+  .hero h1{letter-spacing:-2px}
+}
+
+@media(max-width:500px){
+  .times{grid-template-columns:repeat(2,1fr)}
+  .navlinks a:first-child{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">INK BY EMPRESS</div>
+    <div class="navlinks">
+      <a href="#book">BOOK</a>
+      <a href="https://wa.me/13654823920" target="_blank">WHATSAPP</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="badge">TATTOO ARTIST • USA</div>
+    <h1>INK BY<br>EMPRESS</h1>
+    <p>
+      Bringing your visions to life through custom tattoo work.
+      6+ years of experience. Your idea, my ink.
+    </p>
+    <a class="btn" href="#book">REQUEST AN APPOINTMENT</a>
+  </div>
+</div>
+
+<section>
+  <div class="about">
+    <h2 class="section-title">Meet Empress</h2>
+    <p class="section-sub">
+      I've been in this tattoo industry for 6+ years.
+      I love being able to bring visions to life.
+      I look forward to seeing you in my chair!
+    </p>
+
+    <div class="socials">
+      <a class="social" href="https://instagram.com/inkbyempress01" target="_blank">
+        Instagram @inkbyempress01
+      </a>
+      <a class="social" href="https://tiktok.com/@inkbyempress001" target="_blank">
+        TikTok @inkbyempress001
+      </a>
+      <a class="social" href="https://wa.me/13654823920" target="_blank">
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <h2 class="section-title">Book Your Tattoo</h2>
+  <p class="section-sub">
+    Choose a date and time, then send your appointment request.
+  </p>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="month-row">
+        <button onclick="changeMonth(-1)">‹</button>
+        <h3 id="monthTitle"></h3>
+        <button onclick="changeMonth(1)">›</button>
+      </div>
+
+      <div class="calendar" id="calendar"></div>
+
+      <div id="selectedDate" class="notice">
+        Select a date above.
+      </div>
+
+      <h3>Available Times</h3>
+      <div class="times" id="times"></div>
+
+      <div class="form" id="bookingForm">
+
+        <label>Your Name</label>
+        <input id="name" type="text" placeholder="Full name">
+
+        <label>Email</label>
+        <input id="email" type="email" placeholder="Email address">
+
+        <label>Phone</label>
+        <input id="phone" type="tel" placeholder="Phone number">
+
+        <label>Tattoo Details</label>
+        <textarea id="details" placeholder="Tell Empress about your tattoo idea, placement, size, style, etc."></textarea>
+
+        <div class="check">
+          <input id="age" type="checkbox">
+          <span>I confirm that I am 18 years of age or older.</span>
+        </div>
+
+        <div class="check">
+          <input id="rules" type="checkbox">
+          <span>I have read and agree to the appointment rules below.</span>
+        </div>
+
+        <button class="btn" onclick="submitRequest()">
+          REQUEST APPOINTMENT
+        </button>
+
+        <div id="success">
+          <strong>Request received.</strong>
+          <p style="margin:10px 0;color:#aaa;">
+            Your next step is to contact Empress on WhatsApp.
+            Your appointment is not confirmed until Empress confirms it.
+          </p>
+
+          <a id="whatsappButton" class="btn" target="_blank">
+            MESSAGE EMPRESS ON WHATSAPP
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Appointment Rules</h2>
+
+      <ul class="rules">
+        <li><strong>Minimum:</strong> $150</li>
+        <li><strong>Deposit:</strong> 50% deposit required</li>
+        <li><strong>Payment:</strong> Deposit is handled privately through WhatsApp. No online payment is collected on this website.</li>
+        <li><strong>Tax:</strong> All payments include 7.5% sales tax.</li>
+        <li><strong>Age:</strong> You must be 18+.</li>
+        <li><strong>Hours:</strong> Monday–Saturday, 9:30 AM–6:00 PM.</li>
+        <li><strong>Sunday:</strong> Reach out directly to book.</li>
+        <li><strong>Late arrivals:</strong> Please arrive on time. A 10-minute grace period is given. After that, your appointment will be cancelled and your deposit will be lost.</li>
+        <li><strong>Payment methods:</strong> Cash, Apple Pay, Cash App and cryptocurrency.</li>
+      </ul>
+
+      <div class="notice">
+        <strong>Important:</strong> Selecting a time only sends an appointment request.
+        It does not automatically confirm your appointment.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  © 2026 Ink by Empress • Tattoo Artist
+</footer>
+
+<script>
+let currentDate = new Date();
+let selectedDate = "";
+let selectedTime = "";
+
+const times = [
+  "9:30 AM",
+  "10:30 AM",
+  "11:30 AM",
+  "12:30 PM",
+  "1:30 PM",
+  "2:30 PM",
+  "3:30 PM",
+  "4:30 PM",
+  "5:30 PM"
+];
+
+function renderCalendar(){
+  const calendar = document.getElementById("calendar");
+  const title = document.getElementById("monthTitle");
+
+  calendar.innerHTML = "";
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  title.textContent = new Date(year,month,1)
+    .toLocaleString("en-US",{month:"long",year:"numeric"});
+
+  ["SUN","MON","TUE","WED","THU","FRI","SAT"].forEach(d=>{
+    const el=document.createElement("div");
+    el.className="day-name";
+    el.textContent=d;
+    calendar.appendChild(el);
+  });
+
+  const first = new Date(year,month,1).getDay();
+  const days = new Date(year,month+1,0).getDate();
+
+  for(let i=0;i<first;i++){
+    calendar.appendChild(document.createElement("div"));
+  }
+
+  for(let d=1;d<=days;d++){
+    const date = new Date(year,month,d);
+    const btn = document.createElement("button");
+    btn.className="day";
+    btn.textContent=d;
+
+    const dayOfWeek=date.getDay();
+
+    if(dayOfWeek===0){
+      btn.disabled=true;
+    }
+
+    const today=new Date();
+    today.setHours(0,0,0,0);
+
+    if(date<today){
+      btn.disabled=true;
+    }
+
+    const key=formatDate(date);
+
+    if(key===selectedDate){
+      btn.classList.add("selected");
+    }
+
+    btn.onclick=()=>{
+      selectedDate=key;
+      selectedTime="";
+      document.getElementById("selectedDate").textContent=
+        "Selected: "+date.toLocaleDateString("en-US",{
+          weekday:"long",
+          month:"long",
+          day:"numeric",
+          year:"numeric"
+        });
+
+      document.getElementById("bookingForm").classList.remove("show");
+      renderTimes();
+      renderCalendar();
+    };
+
+    calendar.appendChild(btn);
+  }
+}
+
+function renderTimes(){
+  const box=document.getElementById("times");
+  box.innerHTML="";
+
+  if(!selectedDate){
+    box.innerHTML='<div style="color:#777">Choose a date first.</div>';
+    return;
+  }
+
+  times.forEach(t=>{
+    const btn=document.createElement("button");
+    btn.className="time";
+    btn.textContent=t;
+
+    if(t===selectedTime) btn.classList.add("selected");
+
+    btn.onclick=()=>{
+      selectedTime=t;
+      document.getElementById("bookingForm").classList.add("show");
+      renderTimes();
+    };
+
+    box.appendChild(btn);
+  });
+}
+
+function changeMonth(amount){
+  currentDate.setMonth(currentDate.getMonth()+amount);
+  renderCalendar();
+  renderTimes();
+}
+
+function formatDate(date){
+  return date.getFullYear()+"-"+
+    String(date.getMonth()+1).padStart(2,"0")+"-"+
+    String(date.getDate()).padStart(2,"0");
+}
+
+function submitRequest(){
+
+  const name=document.getElementById("name").value.trim();
+  const email=document.getElementById("email").value.trim();
+  const phone=document.getElementById("phone").value.trim();
+  const details=document.getElementById("details").value.trim();
+
+  if(!selectedDate || !selectedTime){
+    alert("Please choose a date and time.");
+    return;
+  }
+
+  if(!name || !email || !phone || !details){
+    alert("Please complete all fields.");
+    return;
+  }
+
+  if(!document.getElementById("age").checked){
+    alert("You must confirm that you are 18 or older.");
+    return;
+  }
+
+  if(!document.getElementById("rules").checked){
+    alert("Please agree to the appointment rules.");
+    return;
+  }
+
+  const message =
+`Hi Empress! I'd like to request a tattoo appointment.
+
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Requested date: ${selectedDate}
+Requested time: ${selectedTime}
+
+Tattoo details:
+${details}
+
+I understand that my appointment is not confirmed until you confirm it and provide deposit instructions.`;
+
+  const url="https://wa.me/13654823920?text="+encodeURIComponent(message);
+
+  document.getElementById("whatsappButton").href=url;
+  document.getElementById("success").style.display="block";
+}
+
+renderCalendar();
+renderTimes();
+</script>
+
+</body>
+</html>
